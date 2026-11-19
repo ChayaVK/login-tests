@@ -1,3 +1,4 @@
+// Login page tests for the ShopEasy demo site
 import { test, expect } from '@playwright/test';
 
 test.beforeEach(async ({ page }) => {
