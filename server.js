@@ -6,4 +6,4 @@ http.createServer((req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
     res.end(data);
   });
-}).listen(3000, () => console.log('ShopEasy demo on http://localhost:3000'));
+}).listen(process.env.PORT || 3000, () => console.log(`ShopEasy demo on http://localhost:${process.env.PORT || 3000}`));
