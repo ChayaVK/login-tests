@@ -1,4 +1,5 @@
 // Login page tests for the ShopEasy demo site
+// Runs on Chromium, Firefox and WebKit
 import { test, expect } from '@playwright/test';
 
 test.beforeEach(async ({ page }) => {
