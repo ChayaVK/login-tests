@@ -3,14 +3,10 @@ pipeline {
     agent { label 'playwright' }
     stages {
         stage('Install') {
-            steps {
-                sh 'npm ci'
-            }
+            steps { sh 'npm ci' }
         }
         stage('Test') {
-            steps {
-                sh 'npx playwright test --project=chromium'
-            }
+            steps { sh 'npx playwright test --project=chromium' }
         }
     }
 }

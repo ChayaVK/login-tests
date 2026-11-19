@@ -4,7 +4,8 @@ pipeline {
     triggers {
         pollSCM('H/5 * * * *')
         cron('H 2 * * 1-5')
-        upstream(upstreamProjects: 'deploy-staging', threshold: hudson.model.Result.SUCCESS)
+        upstream(upstreamProjects: 'deploy-staging',
+                 threshold: hudson.model.Result.SUCCESS)
     }
     stages {
         stage('Install') {

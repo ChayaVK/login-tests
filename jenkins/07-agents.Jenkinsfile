@@ -4,7 +4,6 @@ pipeline {
     stages {
         stage('Agent info') {
             steps {
-                echo "Running on ${env.NODE_NAME}"
                 sh 'node --version'
                 sh 'npx playwright --version'
             }

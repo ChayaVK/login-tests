@@ -17,7 +17,8 @@ pipeline {
         stage('Test') {
             steps {
                 echo "Browser: ${params.BROWSER}, env: ${params.TEST_ENV}, report: ${env.REPORT_NAME}"
-                withCredentials([string(credentialsId: 'login-password', variable: 'TEST_PASSWORD')]) {
+                withCredentials([string(credentialsId: 'login-password',
+                                          variable: 'TEST_PASSWORD')]) {
                     sh 'echo "Password is $TEST_PASSWORD"'
                     sh 'npx playwright test --project=$BROWSER'
                 }

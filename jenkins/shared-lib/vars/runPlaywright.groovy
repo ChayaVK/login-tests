@@ -1,4 +1,4 @@
-// J10: one test pipeline that every team calls with its own settings
+// vars/runPlaywright.groovy: one test pipeline that every team calls
 def call(Map config = [:]) {
     def browser = config.browser ?: 'chromium'
     def tag = config.tag ?: ''

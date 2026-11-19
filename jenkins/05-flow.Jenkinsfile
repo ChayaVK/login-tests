@@ -26,14 +26,8 @@ pipeline {
         }
     }
     post {
-        success {
-            echo 'Smoke passed.'
-        }
-        failure {
-            echo 'Something failed. Tell the team.'
-        }
-        always {
-            echo 'Pipeline finished.'
-        }
+        success { echo 'Smoke passed.' }
+        failure { echo 'Something failed. Tell the team.' }
+        always  { echo 'Pipeline finished.' }
     }
 }

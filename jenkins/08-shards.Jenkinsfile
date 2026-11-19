@@ -9,7 +9,7 @@ pipeline {
                     environment { PORT = '3011' }
                     steps {
                         sh 'npm ci'
-                        sh 'npx playwright test --project=chromium --shard=1/2'
+                        sh 'npx playwright test --project=chromium --shard=1/2 --fully-parallel'
                     }
                 }
                 stage('Shard 2') {
@@ -17,7 +17,7 @@ pipeline {
                     environment { PORT = '3012' }
                     steps {
                         sh 'npm ci'
-                        sh 'npx playwright test --project=chromium --shard=2/2'
+                        sh 'npx playwright test --project=chromium --shard=2/2 --fully-parallel'
                     }
                 }
             }
