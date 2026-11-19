@@ -1,0 +1,17 @@
+name: Set up the test project
+description: Install Node, the packages and one Playwright browser
+inputs:
+  browser:
+    description: Browser to install
+    default: chromium
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v7
+      with:
+        node-version: 22
+        cache: npm
+    - run: npm ci
+      shell: bash
+    - run: npx playwright install --with-deps ${{ inputs.browser }}
+      shell: bash

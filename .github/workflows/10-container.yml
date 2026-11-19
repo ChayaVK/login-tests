@@ -1,0 +1,38 @@
+name: 10 Containers and services
+
+on: push
+
+jobs:
+  in-container:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.63.0-noble
+    steps:
+      - uses: actions/checkout@v7
+      - run: npm ci
+      - name: Run the tests (browsers are already in the image)
+        run: npx playwright test --project=chromium
+        env:
+          HOME: /root
+
+  with-database:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - name: Create test data in the database
+        env:
+          PGPASSWORD: postgres
+        run: |
+          psql -h localhost -U postgres -c "CREATE TABLE users (name text);"
+          psql -h localhost -U postgres -c "INSERT INTO users VALUES ('asha');"
+          psql -h localhost -U postgres -c "SELECT * FROM users;"

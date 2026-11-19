@@ -1,0 +1,14 @@
+name: 09 Reuse
+
+on: push
+
+jobs:
+  chromium:
+    uses: ./.github/workflows/reusable-tests.yml
+    with:
+      project: chromium
+
+  firefox:
+    uses: ./.github/workflows/reusable-tests.yml
+    with:
+      project: firefox

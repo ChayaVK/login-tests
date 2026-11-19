@@ -1,0 +1,25 @@
+name: 02 Triggers
+
+on:
+  push:
+    branches: [main]
+    paths: ['tests/**']
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '30 20 * * *'      # every night at 20:30 UTC (2:00 AM IST)
+  workflow_dispatch:
+    inputs:
+      browser:
+        description: 'Browser to test'
+        type: choice
+        options: [chromium, firefox, webkit]
+        default: chromium
+
+jobs:
+  show-trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Started by: ${{ github.event_name }}"
+          echo "Browser: ${{ inputs.browser || 'chromium' }}"

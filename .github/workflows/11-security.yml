@@ -1,0 +1,28 @@
+name: 11 Security
+
+on: push
+
+permissions:
+  contents: read
+
+jobs:
+  read-only-token:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Try to push a tag with a read-only token
+        run: |
+          git tag demo-tag
+          git push origin demo-tag
+
+  unsafe-vs-safe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Unsafe - commit message pasted into the script
+        run: |
+          echo "Commit: ${{ github.event.head_commit.message }}"
+      - name: Safe - commit message passed as an environment variable
+        env:
+          MESSAGE: ${{ github.event.head_commit.message }}
+        run: |
+          echo "Commit: $MESSAGE"

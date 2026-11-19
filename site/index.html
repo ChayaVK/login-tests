@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>ShopEasy Login</title></head>
+<body>
+  <h1>ShopEasy</h1>
+  <form id="login">
+    <label>Username <input name="username" data-testid="username"></label>
+    <label>Password <input name="password" type="password" data-testid="password"></label>
+    <button type="submit">Log in</button>
+  </form>
+  <p role="alert" data-testid="message"></p>
+  <script>
+    document.getElementById('login').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const u = e.target.username.value, p = e.target.password.value;
+      const msg = document.querySelector('[data-testid=message]');
+      if (!u || !p) msg.textContent = 'Username and password are required';
+      else if (u === 'asha' && p === 'demo-pass') msg.textContent = 'Welcome, asha';
+      else msg.textContent = 'Invalid username or password';
+    });
+  </script>
+</body>
+</html>

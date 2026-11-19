@@ -1,0 +1,42 @@
+name: 06 Job order and conditions
+
+on: push
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    outputs:
+      passed: ${{ steps.count.outputs.passed }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Run smoke tests
+        run: npx playwright test --project=chromium --grep @smoke --reporter=line
+      - name: Count passed tests
+        id: count
+        run: echo "passed=1" >> "$GITHUB_OUTPUT"
+
+  regression:
+    needs: smoke
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Smoke passed ${{ needs.smoke.outputs.passed }} test. Starting regression."
+      - name: A step that fails
+        run: exit 1
+
+  notify:
+    needs: [smoke, regression]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "smoke: ${{ needs.smoke.result }}"
+          echo "regression: ${{ needs.regression.result }}"
+      - name: Only when something failed
+        if: contains(needs.*.result, 'failure')
+        run: echo "Something failed. Sending a message to the team."
