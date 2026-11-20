@@ -8,7 +8,12 @@ pipeline {
         stage('Wait for app') {
             steps {
                 retry(3) {
-                    sh 'test -f .app-ready || { touch .app-ready; echo "App not ready yet"; exit 1; }'
+                    sh '''
+                        test -f .app-ready && exit 0
+                        touch .app-ready
+                        echo "App not ready yet"
+                        exit 1
+                    '''
                 }
             }
         }
