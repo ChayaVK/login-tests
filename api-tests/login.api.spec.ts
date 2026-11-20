@@ -1,4 +1,4 @@
-// API tests: no browser, so they run in milliseconds
+// API tests: no browser needed, so they run in milliseconds
 import { test, expect } from '@playwright/test';
 
 test('health check returns ok @smoke', async ({ request }) => {
