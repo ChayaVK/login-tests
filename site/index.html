@@ -6,9 +6,11 @@
   <form id="login">
     <label>Username <input name="username" data-testid="username"></label>
     <label>Password <input name="password" type="password" data-testid="password"></label>
+    <!-- remember-me -->
     <button type="submit">Log in</button>
   </form>
   <p role="alert" data-testid="message"></p>
+  <p data-testid="offer" hidden>Today's offer: 10% off</p>
   <script>
     document.getElementById('login').addEventListener('submit', (e) => {
       e.preventDefault();
@@ -18,6 +20,8 @@
       else if (u === 'asha' && p === 'demo-pass') msg.textContent = 'Welcome, asha';
       else msg.textContent = 'Invalid username or password';
     });
+    // The offer banner loads after a random delay, like a slow API
+    setTimeout(() => { document.querySelector('[data-testid=offer]').hidden = false; }, 300 + Math.random() * 1100);
   </script>
 </body>
 </html>

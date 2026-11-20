@@ -14,3 +14,16 @@ Workflows 01–11 match the episodes of Module 2.
 Set `PORT` to run the demo site on a port other than 3000 (the parallel Jenkins stages use this).
 
 `03-triggers` polls this repository every few minutes, so a push to `main` starts a new build of that job.
+
+## CI/CD (Module 4)
+
+`cicd/` has the pipelines for the CI/CD episodes:
+
+- `pipeline.Jenkinsfile`: API tests, UI tests, package, deploy to staging, smoke checks, an approval, then production.
+- `quality-gate.Jenkinsfile` and `quality-gate.js`: the PR suite, then a gate that stops the build when tests fail or are flaky.
+- `flaky.Jenkinsfile` and `flaky-trend.Jenkinsfile`: quarantined tests (tag `@quarantine`) and a flaky-rate report.
+- `fast.Jenkinsfile`: 1 vs 2 workers, and `--only-changed`.
+- `release.Jenkinsfile`: deploy to production with a rollback when the smoke tests fail.
+- `feature-flags.Jenkinsfile`: tests for both states of the `FEATURE_REMEMBER_ME` flag.
+
+The demo site has a small API (`/api/health`, `/api/login`, `/api/users`). "Staging" and "production" are two copies of the site on the agent, on ports 4001 and 4002. Set `BASE_URL` to run the tests against one of them.
